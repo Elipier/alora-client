@@ -1,7 +1,7 @@
 import "./style.css";
 import typescriptLogo from "./typescript.svg";
 import viteLogo from "/vite.svg";
-import { setupCounter } from "./counter.ts";
+import traductorModule from "./traductor.ts";
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>
@@ -11,9 +11,10 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
     <a href="https://www.typescriptlang.org/" target="_blank">
       <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
     </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
+    <h1>Alora app</h1>
+    <h2>Feature 1 wip</h2>
+    <div class="text-input">
+      <input type="text" id="text-input" placeholder="Traduire phrase..." />
     </div>
     <p class="read-the-docs">
       Click on the Vite and TypeScript logos to learn more
@@ -21,4 +22,4 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   </div>
 `;
 
-setupCounter(document.querySelector<HTMLButtonElement>("#counter")!);
+traductorModule();
