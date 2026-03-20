@@ -22,4 +22,5 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   </div>
 `;
 
-traductorModule();
+const result = await traductorModule("Comment ça va ?");
+console.log(result); // → "Hola a todos"
