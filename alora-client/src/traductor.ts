@@ -1,16 +1,14 @@
 // TO DO :
 
-// Trouver une Api pour le projet (Google Trad vs Open Source)
-
-// Entrer des phrases écrites + traduction
-
-// Connecter à une Api (Google Trad vs Open Source)
-
-// Input qui va recevoir le texte
-
-// Fonction appel API pour avoir la réponse
-
+// OK - Trouver une Api pour le projet (Google Trad vs Open Source)
+// OK - Connecter à une Api (Google Trad vs Open Source)
+// OK - Entrer des phrases écrites + traduction
+// OK - Input qui va recevoir le texte
+// OK - Fonction appel API pour avoir la réponse
 // Afficher la réponse
+// Correction des fautes
+// Corrections TS et clean
+// Documenter Code dans Readme
 
 export default async function translateToSpanish(
   text: string,
