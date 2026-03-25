@@ -12,9 +12,11 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
     </a>
     <h1>Alora app</h1>
-    <h2>Feature 1 wip</h2>
-      <input type="text" class="js-text-input" id="text-input" placeholder="Traduire phrase..." />
-      <button type="submit" class="js-submit-btn">Submit</button>
+    <h2>Feature 1 : Traduction --><span class="js-text"></span></h2>
+     <form>
+        <input type="text" class="js-text-input" id="text-input" placeholder="Traduire phrase..." />
+        <button type="submit" class="js-submit-btn">Submit</button>
+     </form>
     <div>
       
     </div>
@@ -24,16 +26,14 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   </div>
 `;
 
-let inputElement = document.querySelector(".js-text-input");
-const submitBtnElement = document.querySelector(".js-submit-btn");
+let inputElement: any = document.querySelector(".js-text-input");
+let submitBtnElement = document.querySelector(".js-submit-btn");
+let textElement: any = document.querySelector(".js-text");
 
 if (submitBtnElement !== null && inputElement !== null) {
-  // const result = await traductorModule("Comment ça va ?");
-  // console.log(result);
-
-  // console.log(traductorModule(inputElement.innerHTML));
-  submitBtnElement.addEventListener("click", async () => {
+  submitBtnElement.addEventListener("click", async (event) => {
+    event.preventDefault();
     const result = await traductorModule(inputElement.value);
-    console.log(result);
+    textElement.innerHTML = `${result}`;
   });
 }

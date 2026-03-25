@@ -5,7 +5,7 @@
 // OK - Entrer des phrases écrites + traduction
 // OK - Input qui va recevoir le texte
 // OK - Fonction appel API pour avoir la réponse
-// Afficher la réponse
+// OK - Afficher la réponse
 // Correction des fautes
 // Corrections TS et clean
 // Documenter Code dans Readme
