@@ -1,12 +1,12 @@
 // TO DO :
 
-// OK - Trouver une Api pour le projet (Google Trad vs Open Source)
-// OK - Connecter à une Api (Google Trad vs Open Source)
+// OK - Trouver une Api pour le projet (LibreTranslate)
+// OK - Connecter à une Api (Docker en local pour le moment)
 // OK - Entrer des phrases écrites + traduction
 // OK - Input qui va recevoir le texte
 // OK - Fonction appel API pour avoir la réponse
 // OK - Afficher la réponse
-// Correction des fautes
+// WIP - Correction des fautes (https://languagetool.org/)
 // Corrections TS et clean
 // Documenter Code dans Readme
 
