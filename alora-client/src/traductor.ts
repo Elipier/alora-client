@@ -1,14 +1,6 @@
-// TO DO :
-
-// OK - Trouver une Api pour le projet (LibreTranslate)
-// OK - Connecter à une Api (Docker en local pour le moment)
-// OK - Entrer des phrases écrites + traduction
-// OK - Input qui va recevoir le texte
-// OK - Fonction appel API pour avoir la réponse
-// OK - Afficher la réponse
-// WIP - Correction des fautes (https://languagetool.org/)
-// Corrections TS et clean
-// Documenter Code dans Readme
+export interface TranslateResponse {
+  translatedText: string;
+}
 
 export default async function translateToSpanish(
   text: string,
@@ -20,16 +12,21 @@ export default async function translateToSpanish(
     },
     body: JSON.stringify({
       q: text,
-      source: "auto", // détecte automatiquement
+      source: "auto",
       target: "es",
       format: "text",
     }),
   });
 
   if (!response.ok) {
-    throw new Error("Erreur API traduction");
+    throw new Error(`Erreur API traduction (${response.status})`);
   }
 
-  const data = await response.json();
+  const data = (await response.json()) as TranslateResponse;
+
+  if (!data || typeof data.translatedText !== "string") {
+    throw new Error("Réponse traduction invalide");
+  }
+
   return data.translatedText;
 }

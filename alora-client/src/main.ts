@@ -1,10 +1,16 @@
 import "./style.css";
 import typescriptLogo from "./typescript.svg";
 import viteLogo from "/vite.svg";
-import traductorModule from "./traductor.ts";
-import correctorModule from "./corrector.ts";
+import traductorModule from "./traductor";
+import correctorModule from "./corrector";
 
-document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
+const appElement = document.querySelector<HTMLDivElement>("#app");
+
+if (!appElement) {
+  throw new Error("Impossible de trouver l'élément #app");
+}
+
+appElement.innerHTML = `
   <div>
     <a href="https://vite.dev" target="_blank">
       <img src="${viteLogo}" class="logo" alt="Vite logo" />
@@ -29,50 +35,75 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   </div>
 `;
 
-let inputElement: any = document.querySelector(".js-text-input");
-let submitBtnElement = document.querySelector(".js-submit-btn");
-let translatedTextElement: any = document.querySelector(".js-translated-text");
-let correctedTextElement: any = document.querySelector(".js-corrected-text");
-let resultTranslation: undefined | string;
+const inputElement = document.querySelector<HTMLInputElement>(".js-text-input");
+const submitBtnElement =
+  document.querySelector<HTMLButtonElement>(".js-submit-btn");
+const translatedTextElement = document.querySelector<HTMLSpanElement>(
+  ".js-translated-text",
+);
+const correctedTextElement =
+  document.querySelector<HTMLSpanElement>(".js-corrected-text");
 
-if (submitBtnElement !== null && inputElement !== null) {
+interface MatchInfo {
+  offset: number;
+  length: number;
+  replacement: string;
+}
+
+interface LanguageToolMatch {
+  context: {
+    offset: number;
+    length: number;
+  };
+  replacements: Array<{ value: string }>;
+}
+
+if (
+  submitBtnElement &&
+  inputElement &&
+  translatedTextElement &&
+  correctedTextElement
+) {
   submitBtnElement.addEventListener("click", async (event) => {
     event.preventDefault();
 
-    const result = await correctorModule(inputElement.value);
+    try {
+      const result = await correctorModule(inputElement.value);
+      const matches = result.matches ?? [];
+      let correctedText = inputElement.value;
 
-    const matches = result.matches;
-    let matchesArray = [];
-    let newString: string = inputElement.value;
+      if (matches.length > 0) {
+        const corrections: MatchInfo[] = matches.map(
+          (match: LanguageToolMatch) => ({
+            offset: match.context.offset,
+            length: match.context.length,
+            replacement: match.replacements[0]?.value ?? "",
+          }),
+        );
 
-    if (matches.length > 0) {
-      for (let i = 0; i < matches.length; i++) {
-        const { offset, length } = matches[i].context;
-        const replacement = matches[i].replacements[0].value;
+        corrections.sort((a, b) => b.offset - a.offset);
 
-        matchesArray.push({ offset, length, replacement });
+        correctedText = corrections.reduce((current, correction) => {
+          return (
+            current.slice(0, correction.offset) +
+            correction.replacement +
+            current.slice(correction.offset + correction.length)
+          );
+        }, correctedText);
+
+        correctedTextElement.textContent = correctedText;
+      } else {
+        correctedTextElement.textContent = "Pas de fautes détectées !";
       }
 
-      interface MatchInfo {
-        offset: number;
-        length: number;
-        replacement: string;
-      }
-
-      const sortedArray = matchesArray.sort((a, b) => b.offset - a.offset);
-
-      sortedArray.forEach((el: MatchInfo) => {
-        let reconstructString = `${newString.slice(0, el.offset) + el.replacement + newString.slice(el.offset + el.length)}`;
-        newString = reconstructString;
-      });
-
-      correctedTextElement.innerHTML = `${newString}`;
-      resultTranslation = await traductorModule(newString);
-      translatedTextElement.innerHTML = `${resultTranslation}`;
-    } else {
-      correctedTextElement.innerHTML = `Pas de fautes détectées !`;
-      resultTranslation = await traductorModule(inputElement.value);
-      translatedTextElement.innerHTML = `${resultTranslation}`;
+      const textToTranslate =
+        matches.length > 0 ? correctedText : inputElement.value;
+      const translation = await traductorModule(textToTranslate);
+      translatedTextElement.textContent = translation;
+    } catch (error) {
+      correctedTextElement.textContent = "Erreur lors du traitement.";
+      translatedTextElement.textContent = "";
+      console.error(error);
     }
   });
 }
