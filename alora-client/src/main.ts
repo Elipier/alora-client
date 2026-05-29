@@ -3,6 +3,7 @@ import typescriptLogo from "./typescript.svg";
 import viteLogo from "/vite.svg";
 import traductorModule from "./traductor";
 import correctorModule from "./corrector";
+import type { LanguageToolMatch, MatchInfo } from "./types";
 
 const appElement = document.querySelector<HTMLDivElement>("#app");
 
@@ -43,20 +44,6 @@ const translatedTextElement = document.querySelector<HTMLSpanElement>(
 );
 const correctedTextElement =
   document.querySelector<HTMLSpanElement>(".js-corrected-text");
-
-interface MatchInfo {
-  offset: number;
-  length: number;
-  replacement: string;
-}
-
-interface LanguageToolMatch {
-  context: {
-    offset: number;
-    length: number;
-  };
-  replacements: Array<{ value: string }>;
-}
 
 if (
   submitBtnElement &&
