@@ -1,3 +1,4 @@
+import "@picocss/pico/css/pico.min.css";
 import "./style.css";
 import typescriptLogo from "./typescript.svg";
 import viteLogo from "/vite.svg";
@@ -39,6 +40,7 @@ appElement.innerHTML = `
 
      <button class="js-retrieve">Get random sentence</button>
      <button class="js-clear">Delete all sentences</button>
+     <button class="js-read">Read sentence</button>
     <div>
       
     </div>
