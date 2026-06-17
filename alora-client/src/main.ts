@@ -126,7 +126,7 @@ if (
       removeFromLocalstorage("ads-candidate-feedback-hash");
     }
 
-    let sentencesLenght = localStorage.length;
+    const sentencesLenght = localStorage.length;
 
     const getRandomNunmber = Math.floor(
       Math.random() * sentencesLenght + 1,
