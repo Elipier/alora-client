@@ -1,25 +1,4 @@
-export interface LanguageToolReplacement {
-  value: string;
-}
-
-export interface LanguageToolContext {
-  offset: number;
-  length: number;
-  text: string;
-}
-
-export interface LanguageToolMatch {
-  message: string;
-  shortMessage: string;
-  offset: number;
-  length: number;
-  replacements: LanguageToolReplacement[];
-  context: LanguageToolContext;
-}
-
-export interface LanguageToolResult {
-  matches: LanguageToolMatch[];
-}
+import type { LanguageToolResult } from "./types";
 
 export default async function checkFrenchText(
   text: string,

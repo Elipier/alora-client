@@ -1,6 +1,4 @@
-export interface TranslateResponse {
-  translatedText: string;
-}
+import type { TranslateResponse } from "./types";
 
 export default async function translateToSpanish(
   text: string,

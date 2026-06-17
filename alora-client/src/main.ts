@@ -3,6 +3,13 @@ import typescriptLogo from "./typescript.svg";
 import viteLogo from "/vite.svg";
 import traductorModule from "./traductor";
 import correctorModule from "./corrector";
+import type { LanguageToolMatch, MatchInfo } from "./types";
+import {
+  addToLocalStorage,
+  getFromLocalstorage,
+  deleteFromLocalStorage,
+  removeFromLocalstorage,
+} from "./sentenceStorage";
 
 const appElement = document.querySelector<HTMLDivElement>("#app");
 
@@ -19,13 +26,19 @@ appElement.innerHTML = `
       <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
     </a>
     <h1>Alora app</h1>
-    <h2>Feature 1 : <br>
-    Correction --><span class="js-corrected-text"></span><br>
-    Traduction --><span class="js-translated-text"></span></h2>
+    <h2>Feature 1 : </h2>
+    <h3>Correction --><span class="js-corrected-text"></span><br>
+    Traduction --><span class="js-translated-text"></span><br>
+    Phrase Random --><span class="js-random-sentence"></span>
+    </h3>
+    
      <form>
         <input type="text" class="js-text-input" id="text-input" placeholder="Traduire phrase..." />
         <button type="submit" class="js-submit-btn">Submit</button>
      </form>
+
+     <button class="js-retrieve">Get random sentence</button>
+     <button class="js-clear">Delete all sentences</button>
     <div>
       
     </div>
@@ -43,29 +56,26 @@ const translatedTextElement = document.querySelector<HTMLSpanElement>(
 );
 const correctedTextElement =
   document.querySelector<HTMLSpanElement>(".js-corrected-text");
-
-interface MatchInfo {
-  offset: number;
-  length: number;
-  replacement: string;
-}
-
-interface LanguageToolMatch {
-  context: {
-    offset: number;
-    length: number;
-  };
-  replacements: Array<{ value: string }>;
-}
-
+const triggerRandomSentence =
+  document.querySelector<HTMLButtonElement>(".js-retrieve");
+const deleteAllSentences =
+  document.querySelector<HTMLButtonElement>(".js-clear");
+const randomSentenceElement = document.querySelector<HTMLSpanElement>(
+  ".js-random-sentence",
+);
 if (
   submitBtnElement &&
   inputElement &&
   translatedTextElement &&
-  correctedTextElement
+  correctedTextElement &&
+  triggerRandomSentence &&
+  deleteAllSentences &&
+  randomSentenceElement
 ) {
   submitBtnElement.addEventListener("click", async (event) => {
     event.preventDefault();
+
+    if (!inputElement.value) return;
 
     try {
       const result = await correctorModule(inputElement.value);
@@ -99,11 +109,39 @@ if (
       const textToTranslate =
         matches.length > 0 ? correctedText : inputElement.value;
       const translation = await traductorModule(textToTranslate);
+
+      addToLocalStorage(translation);
+
       translatedTextElement.textContent = translation;
     } catch (error) {
       correctedTextElement.textContent = "Erreur lors du traitement.";
       translatedTextElement.textContent = "";
       console.error(error);
     }
+  });
+
+  triggerRandomSentence.addEventListener("click", () => {
+    const spamTracker = getFromLocalstorage("ads-candidate-feedback-hash");
+    if (spamTracker) {
+      removeFromLocalstorage("ads-candidate-feedback-hash");
+    }
+
+    const sentencesLenght = localStorage.length;
+
+    const getRandomNunmber = Math.floor(
+      Math.random() * sentencesLenght + 1,
+    ).toString();
+
+    const randomSentence = getFromLocalstorage(getRandomNunmber);
+
+    if (randomSentence) {
+      randomSentenceElement.textContent = `${randomSentence}`;
+    }
+    console.log(localStorage);
+  });
+
+  deleteAllSentences.addEventListener("click", () => {
+    deleteFromLocalStorage();
+    console.log(localStorage);
   });
 }
