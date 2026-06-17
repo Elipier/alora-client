@@ -8,6 +8,7 @@ import {
   addToLocalStorage,
   getFromLocalstorage,
   deleteFromLocalStorage,
+  removeFromLocalstorage,
 } from "./sentenceStorage";
 
 const appElement = document.querySelector<HTMLDivElement>("#app");
@@ -74,6 +75,8 @@ if (
   submitBtnElement.addEventListener("click", async (event) => {
     event.preventDefault();
 
+    if (!inputElement.value) return;
+
     try {
       const result = await correctorModule(inputElement.value);
       const matches = result.matches ?? [];
@@ -118,6 +121,11 @@ if (
   });
 
   triggerRandomSentence.addEventListener("click", () => {
+    const spamTracker = getFromLocalstorage("ads-candidate-feedback-hash");
+    if (spamTracker) {
+      removeFromLocalstorage("ads-candidate-feedback-hash");
+    }
+
     let sentencesLenght = localStorage.length;
 
     const getRandomNunmber = Math.floor(
@@ -126,12 +134,10 @@ if (
 
     const randomSentence = getFromLocalstorage(getRandomNunmber);
 
+    if (randomSentence) {
+      randomSentenceElement.textContent = `${randomSentence}`;
+    }
     console.log(localStorage);
-    console.log(sentencesLenght);
-    console.log(getRandomNunmber);
-    console.log(randomSentence);
-
-    randomSentenceElement.textContent = `${randomSentence}`;
   });
 
   deleteAllSentences.addEventListener("click", () => {

@@ -10,3 +10,7 @@ export function getFromLocalstorage(key: string) {
 export function deleteFromLocalStorage() {
   localStorage.clear();
 }
+
+export function removeFromLocalstorage(key: string) {
+  return localStorage.removeItem(key);
+}
