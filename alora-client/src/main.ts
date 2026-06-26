@@ -112,7 +112,7 @@ if (
   });
 
   readSentenceElement?.addEventListener("click", () => {
-    if (!inputElement.value) return;
-    readSentence(inputElement.value);
+    if (!randomSentenceElement.textContent) return;
+    readSentence(randomSentenceElement.textContent);
   });
 }
