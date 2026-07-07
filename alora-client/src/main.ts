@@ -1,6 +1,5 @@
+import "@picocss/pico/css/pico.min.css";
 import "./style.css";
-import typescriptLogo from "./typescript.svg";
-import viteLogo from "/vite.svg";
 import traductorModule from "./traductor";
 import correctorModule from "./corrector";
 import type { LanguageToolMatch, MatchInfo } from "./types";
@@ -11,42 +10,7 @@ import {
   removeFromLocalstorage,
 } from "./sentenceStorage";
 
-const appElement = document.querySelector<HTMLDivElement>("#app");
-
-if (!appElement) {
-  throw new Error("Impossible de trouver l'élément #app");
-}
-
-appElement.innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Alora app</h1>
-    <h2>Feature 1 : </h2>
-    <h3>Correction --><span class="js-corrected-text"></span><br>
-    Traduction --><span class="js-translated-text"></span><br>
-    Phrase Random --><span class="js-random-sentence"></span>
-    </h3>
-    
-     <form>
-        <input type="text" class="js-text-input" id="text-input" placeholder="Traduire phrase..." />
-        <button type="submit" class="js-submit-btn">Submit</button>
-     </form>
-
-     <button class="js-retrieve">Get random sentence</button>
-     <button class="js-clear">Delete all sentences</button>
-    <div>
-      
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`;
+import { readSentence } from "./speechRecognition";
 
 const inputElement = document.querySelector<HTMLInputElement>(".js-text-input");
 const submitBtnElement =
@@ -63,6 +27,7 @@ const deleteAllSentences =
 const randomSentenceElement = document.querySelector<HTMLSpanElement>(
   ".js-random-sentence",
 );
+const readSentenceElement = document.querySelector<HTMLSpanElement>(".js-read");
 if (
   submitBtnElement &&
   inputElement &&
@@ -70,7 +35,8 @@ if (
   correctedTextElement &&
   triggerRandomSentence &&
   deleteAllSentences &&
-  randomSentenceElement
+  randomSentenceElement &&
+  readSentenceElement
 ) {
   submitBtnElement.addEventListener("click", async (event) => {
     event.preventDefault();
@@ -143,5 +109,10 @@ if (
   deleteAllSentences.addEventListener("click", () => {
     deleteFromLocalStorage();
     console.log(localStorage);
+  });
+
+  readSentenceElement?.addEventListener("click", () => {
+    if (!randomSentenceElement.textContent) return;
+    readSentence(randomSentenceElement.textContent);
   });
 }
