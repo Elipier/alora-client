@@ -10,7 +10,7 @@ if (spamTracker) {
   removeFromLocalstorage("ads-candidate-feedback-hash");
 }
 
-let localStorageArray = Object.values(localStorage);
+const localStorageArray = Object.values(localStorage);
 const arrayLength = localStorageArray.length;
 
 console.log(localStorageArray);
