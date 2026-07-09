@@ -18,16 +18,16 @@ console.log(localStorageArray);
 if (sentenceDisplay && previousButton && nextButton) {
   sentenceDisplay.textContent = `${localStorageArray[currentIndex]}`;
   previousButton.addEventListener("click", () => {
-    let prevIndex = (currentIndex + arrayLength - 1) % arrayLength;
-    let prevItem = localStorageArray[prevIndex];
+    const prevIndex = (currentIndex + arrayLength - 1) % arrayLength;
+    const prevItem = localStorageArray[prevIndex];
     sentenceDisplay.textContent = `${prevItem}`;
     currentIndex = prevIndex;
     console.log(currentIndex);
   });
 
   nextButton.addEventListener("click", () => {
-    let nextIndex = (currentIndex + 1) % arrayLength;
-    let nextItem = localStorageArray[nextIndex];
+    const nextIndex = (currentIndex + 1) % arrayLength;
+    const nextItem = localStorageArray[nextIndex];
     sentenceDisplay.textContent = `${nextItem}`;
     currentIndex = nextIndex;
     console.log(currentIndex);
