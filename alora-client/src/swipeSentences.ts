@@ -10,12 +10,12 @@ if (spamTracker) {
   removeFromLocalstorage("ads-candidate-feedback-hash");
 }
 
-const localStorageArray = Object.values(localStorage);
-const arrayLength = localStorageArray.length;
-
-console.log(localStorageArray);
+let localStorageArray = Object.values(localStorage);
+let arrayLength: any;
 
 if (sentenceDisplay && previousButton && nextButton) {
+  localStorageArray = Object.values(localStorage);
+  arrayLength = localStorageArray.length;
   sentenceDisplay.textContent = `${localStorageArray[currentIndex]}`;
   previousButton.addEventListener("click", () => {
     const prevIndex = (currentIndex + arrayLength - 1) % arrayLength;
@@ -26,6 +26,8 @@ if (sentenceDisplay && previousButton && nextButton) {
   });
 
   nextButton.addEventListener("click", () => {
+    localStorageArray = Object.values(localStorage);
+    arrayLength = localStorageArray.length;
     const nextIndex = (currentIndex + 1) % arrayLength;
     const nextItem = localStorageArray[nextIndex];
     sentenceDisplay.textContent = `${nextItem}`;
