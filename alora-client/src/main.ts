@@ -10,8 +10,8 @@ import {
   removeFromLocalstorage,
   logStorage,
 } from "./sentenceStorage";
-
 import { readSentence } from "./speechRecognition";
+import { swiper } from "./swiper";
 
 const inputElement = document.querySelector<HTMLInputElement>(".js-text-input");
 const submitBtnElement =
@@ -129,3 +129,7 @@ if (
     readSentence(randomSentenceElement.textContent);
   });
 }
+
+swiper.on("slideChange", () => {
+  console.log(`Active index is now: ${swiper.activeIndex}`);
+});
