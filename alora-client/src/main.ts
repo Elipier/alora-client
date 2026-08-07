@@ -8,8 +8,8 @@ import {
   getFromLocalstorage,
   deleteFromLocalStorage,
   removeFromLocalstorage,
+  logStorage,
 } from "./sentenceStorage";
-
 import { readSentence } from "./speechRecognition";
 
 const inputElement = document.querySelector<HTMLInputElement>(".js-text-input");
@@ -27,6 +27,8 @@ const deleteAllSentences =
 const randomSentenceElement = document.querySelector<HTMLSpanElement>(
   ".js-random-sentence",
 );
+const logStorageElement =
+  document.querySelector<HTMLSpanElement>(".js-log-storage");
 const readSentenceElement = document.querySelector<HTMLSpanElement>(".js-read");
 if (
   submitBtnElement &&
@@ -36,7 +38,8 @@ if (
   triggerRandomSentence &&
   deleteAllSentences &&
   randomSentenceElement &&
-  readSentenceElement
+  readSentenceElement &&
+  logStorageElement
 ) {
   submitBtnElement.addEventListener("click", async (event) => {
     event.preventDefault();
@@ -103,12 +106,21 @@ if (
     if (randomSentence) {
       randomSentenceElement.textContent = `${randomSentence}`;
     }
+  });
+
+  //TODO : J'arrive pas à loguer
+  logStorageElement.addEventListener("click", () => {
+    const spamTracker = getFromLocalstorage("ads-candidate-feedback-hash");
+    if (spamTracker) {
+      removeFromLocalstorage("ads-candidate-feedback-hash");
+    }
+
+    logStorage();
     console.log(localStorage);
   });
 
   deleteAllSentences.addEventListener("click", () => {
     deleteFromLocalStorage();
-    console.log(localStorage);
   });
 
   readSentenceElement?.addEventListener("click", () => {

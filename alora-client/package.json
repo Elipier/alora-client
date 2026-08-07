@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@picocss/pico": "^2.1.1",
-    "eslint": "^10.0.3"
+    "eslint": "^10.0.3",
+    "swiper": "^14.0.7"
   }
 }

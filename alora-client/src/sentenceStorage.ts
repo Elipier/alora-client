@@ -14,3 +14,7 @@ export function deleteFromLocalStorage() {
 export function removeFromLocalstorage(key: string) {
   return localStorage.removeItem(key);
 }
+
+export function logStorage() {
+  return console.log(localStorage);
+}
