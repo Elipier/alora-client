@@ -6,7 +6,7 @@ import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 
 function initSwiper() {
-  let swiper = new Swiper(".swiper", {
+  const swiper = new Swiper(".swiper", {
     modules: [Navigation, Scrollbar],
     // Navigation arrows
     navigation: {

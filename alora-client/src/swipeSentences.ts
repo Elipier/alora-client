@@ -8,7 +8,7 @@ if (spamTracker) {
 
 const wrapper = document.querySelector(".swiper-wrapper");
 
-let localStorageArray = Object.values(localStorage);
+const localStorageArray = Object.values(localStorage);
 
 if (wrapper) {
   wrapper.innerHTML = localStorageArray
