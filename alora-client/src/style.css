@@ -48,7 +48,6 @@ body {
     var(--color-bg-start) 0%,
     var(--color-bg-end) 100%
   );
-  background-color: in;
   color: var(--color-text);
 }
 
@@ -184,7 +183,7 @@ a:hover {
   box-shadow: none;
 }
 
-.swipe-card__label {
+.swipe-card-label {
   margin: 0;
   font-size: 0.75rem;
   font-weight: 700;
@@ -193,7 +192,7 @@ a:hover {
   color: var(--card-label);
 }
 
-.swipe-card__text {
+.swipe-card-text {
   margin: 0;
   flex: 1;
   display: flex;
@@ -206,7 +205,7 @@ a:hover {
   white-space: pre-wrap;
 }
 
-.swipe-card__button {
+.swipe-card-button {
   align-self: flex-start;
   display: inline-flex;
   align-items: center;
@@ -230,17 +229,17 @@ a:hover {
     background 150ms ease;
 }
 
-.swipe-card__button::before {
+.swipe-card-button::before {
   content: "🔊";
   font-size: 0.95rem;
 }
 
-.swipe-card__button:hover {
+.swipe-card-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 24px rgba(79, 70, 229, 0.38);
 }
 
-.swipe-card__button:active {
+.swipe-card-button:active {
   transform: translateY(0);
   box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
 }

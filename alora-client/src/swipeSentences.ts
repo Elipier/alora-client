@@ -30,8 +30,8 @@ function renderSentences() {
     wrapper.innerHTML = `
       <div class="swiper-slide">
         <div class="swipe-card empty-state">
-          <p class="swipe-card__label">Aucune phrase enregistrée</p>
-          <p class="swipe-card__text">Ajoutez une phrase dans l’outil de traduction pour la voir apparaître ici.</p>
+          <p class="swipe-card-label">Aucune phrase enregistrée</p>
+          <p class="swipe-card-text">Ajoutez une phrase dans l’outil de traduction pour la voir apparaître ici.</p>
         </div>
       </div>
     `;
@@ -43,9 +43,9 @@ function renderSentences() {
       (sentence) => `
         <div class="swiper-slide">
           <div class="swipe-card">
-            <p class="swipe-card__label">Phrase à réviser</p>
-            <p class="swipe-card__text">${escapeHtml(sentence)}</p>
-            <button type="button" class="swipe-card__button" data-sentence="${escapeHtml(sentence)}">
+            <p class="swipe-card-label">Phrase à réviser</p>
+            <p class="swipe-card-text">${escapeHtml(sentence)}</p>
+            <button type="button" class="swipe-card-button" data-sentence="${escapeHtml(sentence)}">
               Prononcer
             </button>
           </div>
