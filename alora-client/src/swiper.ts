@@ -5,18 +5,25 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 
-let swiper = new Swiper(".swiper", {
-  modules: [Navigation, Scrollbar],
-  // Navigation arrows
-  navigation: {
-    nextEl: ".swiper-button-next",
-    prevEl: ".swiper-button-prev",
-  },
+function initSwiper() {
+  let swiper = new Swiper(".swiper", {
+    modules: [Navigation, Scrollbar],
+    // Navigation arrows
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
 
-  // And if we need scrollbar
-  scrollbar: {
-    el: ".swiper-scrollbar",
-  },
-});
+    // And if we need scrollbar
+    scrollbar: {
+      el: ".swiper-scrollbar",
+    },
 
-export { swiper };
+    observer: true,
+    observeParents: true,
+  });
+
+  return swiper;
+}
+
+export { initSwiper };

@@ -1,37 +1,19 @@
 import { getFromLocalstorage, removeFromLocalstorage } from "./sentenceStorage";
-
-const sentenceDisplay = document.querySelector<HTMLElement>(".js-text-show");
-const previousButton = document.querySelector<HTMLElement>(".js-previous");
-const nextButton = document.querySelector<HTMLElement>(".js-next");
-let currentIndex = 0;
+import { initSwiper } from "./swiper";
 
 const spamTracker = getFromLocalstorage("ads-candidate-feedback-hash");
 if (spamTracker) {
   removeFromLocalstorage("ads-candidate-feedback-hash");
 }
 
+const wrapper = document.querySelector(".swiper-wrapper");
+
 let localStorageArray = Object.values(localStorage);
-let arrayLength: any;
 
-if (sentenceDisplay && previousButton && nextButton) {
-  localStorageArray = Object.values(localStorage);
-  arrayLength = localStorageArray.length;
-  sentenceDisplay.textContent = `${localStorageArray[currentIndex]}`;
-  previousButton.addEventListener("click", () => {
-    const prevIndex = (currentIndex + arrayLength - 1) % arrayLength;
-    const prevItem = localStorageArray[prevIndex];
-    sentenceDisplay.textContent = `${prevItem}`;
-    currentIndex = prevIndex;
-    console.log(currentIndex);
-  });
-
-  nextButton.addEventListener("click", () => {
-    localStorageArray = Object.values(localStorage);
-    arrayLength = localStorageArray.length;
-    const nextIndex = (currentIndex + 1) % arrayLength;
-    const nextItem = localStorageArray[nextIndex];
-    sentenceDisplay.textContent = `${nextItem}`;
-    currentIndex = nextIndex;
-    console.log(currentIndex);
-  });
+if (wrapper) {
+  wrapper.innerHTML = localStorageArray
+    .map((el) => `<div class="swiper-slide">${el}</div>`)
+    .join("");
 }
+
+initSwiper();
