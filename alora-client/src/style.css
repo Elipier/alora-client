@@ -119,6 +119,7 @@ a:hover {
   transition:
     background 150ms ease,
     color 150ms ease;
+  margin-bottom: 0;
 }
 
 .feature-tab.is-active {
@@ -128,6 +129,11 @@ a:hover {
 
 .feature-panel {
   display: none;
+}
+
+.feature-panel-1 {
+  max-width: 626px;
+  margin-inline: auto;
 }
 
 .feature-panel.is-active {
@@ -200,7 +206,7 @@ a:hover {
   justify-content: space-between;
   gap: 1.25rem;
   padding: 1.75rem;
-  text-align: left;
+  text-align: center;
   color: var(--card-text);
   background: linear-gradient(
     160deg,
@@ -248,7 +254,8 @@ a:hover {
   flex: 1;
   display: flex;
   align-items: center;
-  font-size: clamp(1.15rem, 2vw, 1.6rem);
+  justify-content: center;
+  font-size: clamp(1.4rem, 2vw, 1.6rem);
   line-height: 1.6;
   font-weight: 600;
   color: var(--card-text);
@@ -257,9 +264,9 @@ a:hover {
 }
 
 .swipe-card-button {
-  align-self: flex-start;
   display: inline-flex;
   align-items: center;
+  margin-inline: auto;
   gap: 0.5rem;
   padding: 0.7rem 1.3rem;
   font-size: 0.9rem;
