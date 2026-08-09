@@ -96,12 +96,52 @@ a:hover {
 }
 
 /* ---------------------------------------------------------
+   Tabs
+--------------------------------------------------------- */
+.feature-tabs {
+  display: inline-flex;
+  gap: 0.75rem;
+  margin: 0 auto 2rem;
+  padding: 0.5rem;
+  background: rgba(15, 23, 42, 0.35);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: var(--radius-pill);
+}
+
+.feature-tab {
+  padding: 0.7rem 1.4rem;
+  font-weight: 600;
+  color: var(--color-text);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+}
+
+.feature-tab.is-active {
+  color: var(--card-text);
+  background: linear-gradient(135deg, #f8fafc 0%, #dbeafe 100%);
+}
+
+.feature-panel {
+  display: none;
+}
+
+.feature-panel.is-active {
+  display: block;
+}
+
+/* ---------------------------------------------------------
    Swiper — conteneur
 --------------------------------------------------------- */
 .swiper {
+  position: relative;
   width: min(100%, 680px);
   margin: 0 auto;
-  padding-bottom: 2.5rem;
+  padding: 0 3rem 2.5rem;
 }
 
 .swiper-wrapper {
@@ -116,11 +156,25 @@ a:hover {
 
 .swiper-button-prev,
 .swiper-button-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   width: 44px;
   height: 44px;
   color: var(--color-text);
   background: rgba(15, 23, 42, 0.75);
+  border: 0;
   border-radius: var(--radius-pill);
+  cursor: pointer;
+  z-index: 10;
+}
+
+.swiper-button-prev {
+  left: 0;
+}
+
+.swiper-button-next {
+  right: 0;
 }
 
 .swiper-button-prev::after,
@@ -128,12 +182,11 @@ a:hover {
   font-size: 1.1rem;
 }
 
-.swiper-scrollbar {
-  background: rgba(255, 255, 255, 0.16);
-}
-
-.swiper-scrollbar-drag {
-  background: #60a5fa;
+.swiper-pagination {
+  position: static;
+  margin-top: 1rem;
+  color: var(--color-text);
+  font-weight: 700;
 }
 
 /* ---------------------------------------------------------

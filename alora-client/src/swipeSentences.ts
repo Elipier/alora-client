@@ -8,6 +8,7 @@ if (spamTracker) {
 }
 
 const wrapper = document.querySelector<HTMLElement>(".swiper-wrapper");
+let swiper = null as ReturnType<typeof initSwiper> | null;
 
 function escapeHtml(value: string) {
   return value
@@ -35,6 +36,9 @@ function renderSentences() {
         </div>
       </div>
     `;
+    if (swiper) {
+      swiper.update();
+    }
     return;
   }
 
@@ -61,7 +65,12 @@ function renderSentences() {
         readSentence(button.dataset.sentence ?? "");
       });
     });
+
+  if (swiper) {
+    swiper.update();
+  }
 }
 
+window.addEventListener("sentences:updated", renderSentences);
 renderSentences();
-initSwiper();
+swiper = initSwiper();

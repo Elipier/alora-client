@@ -10,20 +10,39 @@
     <main class="app container">
       <h1>Alora app</h1>
 
-      <div class="mb-40">
-        <h2>Feature 2 : Swipper les phrase</h2>
-        <div class="swiper">
-          <div class="swiper-wrapper"></div>
-          <div class="swiper-scrollbar"></div>
-        </div>
+      <div class="feature-tabs" role="tablist" aria-label="Features navigation">
+        <button
+          type="button"
+          class="feature-tab is-active"
+          data-tab-target="feature-1"
+          aria-selected="true"
+          role="tab"
+          aria-controls="feature-1-panel"
+        >
+          Feature 1
+        </button>
+        <button
+          type="button"
+          class="feature-tab"
+          data-tab-target="feature-2"
+          aria-selected="false"
+          role="tab"
+          aria-controls="feature-2-panel"
+          tabindex="-1"
+        >
+          Feature 2
+        </button>
       </div>
 
-      <div>
-        <h2>Feature 1 : Stocker phrase + prononcer</h2>
+      <section
+        id="feature-1-panel"
+        class="feature-panel is-active"
+        data-tab-panel="feature-1"
+      >
+        <h2>Feature 1 : Traduire + Stocker phrase</h2>
         <h3>
           Correction --><span class="js-corrected-text"></span><br />
-          Traduction --><span class="js-translated-text"></span><br />
-          Phrase Random --><span class="js-random-sentence"></span>
+          Traduction --><span class="js-translated-text"></span>
         </h3>
         <form>
           <input
@@ -34,10 +53,31 @@
           />
           <button type="submit" class="js-submit-btn">Submit</button>
         </form>
-        <button class="secondary js-log-storage">Log localStorage</button>
         <button class="secondary js-clear">Delete all sentences</button>
-        <button class="secondary js-read">Read sentence</button>
-      </div>
+      </section>
+
+      <section
+        id="feature-2-panel"
+        class="feature-panel"
+        data-tab-panel="feature-2"
+        hidden
+      >
+        <h2>Feature 2 : Swipper les phrase</h2>
+        <div class="swiper">
+          <div class="swiper-wrapper"></div>
+          <div class="swiper-pagination"></div>
+          <button
+            type="button"
+            class="swiper-button-prev"
+            aria-label="Précédent"
+          ></button>
+          <button
+            type="button"
+            class="swiper-button-next"
+            aria-label="Suivant"
+          ></button>
+        </div>
+      </section>
     </main>
     <script type="module" src="/src/main.ts"></script>
     <script type="module" src="/src/swipeSentences.ts"></script>
