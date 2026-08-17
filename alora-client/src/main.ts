@@ -3,14 +3,7 @@ import "./style.css";
 import traductorModule from "./traductor";
 import correctorModule from "./corrector";
 import type { LanguageToolMatch, MatchInfo } from "./types";
-import {
-  addToLocalStorage,
-  getFromLocalstorage,
-  deleteFromLocalStorage,
-  removeFromLocalstorage,
-  logStorage,
-} from "./sentenceStorage";
-import { readSentence } from "./speechRecognition";
+import { addToLocalStorage, deleteFromLocalStorage } from "./sentenceStorage";
 
 const inputElement = document.querySelector<HTMLInputElement>(".js-text-input");
 const submitBtnElement =
@@ -20,26 +13,18 @@ const translatedTextElement = document.querySelector<HTMLSpanElement>(
 );
 const correctedTextElement =
   document.querySelector<HTMLSpanElement>(".js-corrected-text");
-const triggerRandomSentence =
-  document.querySelector<HTMLButtonElement>(".js-retrieve");
 const deleteAllSentences =
   document.querySelector<HTMLButtonElement>(".js-clear");
-const randomSentenceElement = document.querySelector<HTMLSpanElement>(
-  ".js-random-sentence",
-);
-const logStorageElement =
-  document.querySelector<HTMLSpanElement>(".js-log-storage");
-const readSentenceElement = document.querySelector<HTMLSpanElement>(".js-read");
+
+const tabButtons =
+  document.querySelectorAll<HTMLButtonElement>("[data-tab-target]");
+const tabPanels = document.querySelectorAll<HTMLElement>("[data-tab-panel]");
+
 if (
   submitBtnElement &&
   inputElement &&
   translatedTextElement &&
-  correctedTextElement &&
-  triggerRandomSentence &&
-  deleteAllSentences &&
-  randomSentenceElement &&
-  readSentenceElement &&
-  logStorageElement
+  correctedTextElement
 ) {
   submitBtnElement.addEventListener("click", async (event) => {
     event.preventDefault();
@@ -80,6 +65,7 @@ if (
       const translation = await traductorModule(textToTranslate);
 
       addToLocalStorage(translation);
+      window.dispatchEvent(new CustomEvent("sentences:updated"));
 
       translatedTextElement.textContent = translation;
     } catch (error) {
@@ -88,43 +74,31 @@ if (
       console.error(error);
     }
   });
+}
 
-  triggerRandomSentence.addEventListener("click", () => {
-    const spamTracker = getFromLocalstorage("ads-candidate-feedback-hash");
-    if (spamTracker) {
-      removeFromLocalstorage("ads-candidate-feedback-hash");
-    }
-
-    const sentencesLenght = localStorage.length;
-
-    const getRandomNunmber = Math.floor(
-      Math.random() * sentencesLenght + 1,
-    ).toString();
-
-    const randomSentence = getFromLocalstorage(getRandomNunmber);
-
-    if (randomSentence) {
-      randomSentenceElement.textContent = `${randomSentence}`;
-    }
-  });
-
-  //TODO : J'arrive pas à loguer
-  logStorageElement.addEventListener("click", () => {
-    const spamTracker = getFromLocalstorage("ads-candidate-feedback-hash");
-    if (spamTracker) {
-      removeFromLocalstorage("ads-candidate-feedback-hash");
-    }
-
-    logStorage();
-    console.log(localStorage);
-  });
-
+if (deleteAllSentences) {
   deleteAllSentences.addEventListener("click", () => {
     deleteFromLocalStorage();
-  });
-
-  readSentenceElement?.addEventListener("click", () => {
-    if (!randomSentenceElement.textContent) return;
-    readSentence(randomSentenceElement.textContent);
+    window.dispatchEvent(new CustomEvent("sentences:updated"));
   });
 }
+
+tabButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const target = button.dataset.tabTarget;
+    if (!target) return;
+
+    tabButtons.forEach((tabButton) => {
+      const isActive = tabButton === button;
+      tabButton.classList.toggle("is-active", isActive);
+      tabButton.setAttribute("aria-selected", String(isActive));
+      tabButton.tabIndex = isActive ? 0 : -1;
+    });
+
+    tabPanels.forEach((panel) => {
+      const isActive = panel.dataset.tabPanel === target;
+      panel.classList.toggle("is-active", isActive);
+      panel.hidden = !isActive;
+    });
+  });
+});

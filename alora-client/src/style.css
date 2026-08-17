@@ -5,9 +5,9 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color-scheme: light;
+  color: #0f172a;
+  background-color: #f8fafc;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -19,15 +19,15 @@
   --color-text: #f8fafc;
   --color-text-muted: #94a3b8;
 
-  --color-accent: #6366f1;
-  --color-accent-dark: #4f46e5;
-  --color-link: #646cff;
-  --color-link-hover: #535bf2;
+  --color-accent: #1d4ed8;
+  --color-accent-dark: #1e40af;
+  --color-link: #1d4ed8;
+  --color-link-hover: #1e3a8a;
 
   --card-bg-start: #ffffff;
   --card-bg-end: #f8fafc;
   --card-text: #0f172a;
-  --card-label: #6366f1;
+  --card-label: #1d4ed8;
 
   --radius-sm: 12px;
   --radius-md: 20px;
@@ -47,6 +47,11 @@ body {
     var(--color-bg-end) 100%
   );
   color: var(--color-text);
+}
+
+button,
+input {
+  font: inherit;
 }
 
 h1 {
@@ -96,12 +101,60 @@ a:hover {
 }
 
 /* ---------------------------------------------------------
+   Tabs
+--------------------------------------------------------- */
+.feature-tabs {
+  display: inline-flex;
+  gap: 0.75rem;
+  margin: 0 auto 2rem;
+  padding: 0.5rem;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+.feature-tab {
+  padding: 0.7rem 1.4rem;
+  font-weight: 700;
+  color: var(--color-text);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition:
+    background 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease;
+  margin-bottom: 0;
+}
+
+.feature-tab.is-active {
+  color: #0f172a;
+  background: linear-gradient(135deg, #f8fafc 0%, #dbeafe 100%);
+  box-shadow: inset 0 0 0 1px rgba(29, 78, 216, 0.2);
+}
+
+.feature-panel {
+  display: none;
+}
+
+.feature-panel-1 {
+  max-width: 626px;
+  margin-inline: auto;
+}
+
+.feature-panel.is-active {
+  display: block;
+}
+
+/* ---------------------------------------------------------
    Swiper — conteneur
 --------------------------------------------------------- */
 .swiper {
+  position: relative;
   width: min(100%, 680px);
   margin: 0 auto;
-  padding-bottom: 2.5rem;
+  padding: 0 4.5rem 2.5rem;
 }
 
 .swiper-wrapper {
@@ -116,24 +169,48 @@ a:hover {
 
 .swiper-button-prev,
 .swiper-button-next {
-  width: 44px;
-  height: 44px;
-  color: var(--color-text);
-  background: rgba(15, 23, 42, 0.75);
-  border-radius: var(--radius-pill);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  color: var(--color-accent-dark);
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.12);
+}
+
+.swiper-button-prev {
+  left: -0.75rem;
+}
+
+.swiper-button-next {
+  right: -0.75rem;
 }
 
 .swiper-button-prev::after,
 .swiper-button-next::after {
-  font-size: 1.1rem;
+  display: block;
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: 700;
+  color: var(--color-accent-dark);
+  font-family: Arial, sans-serif;
 }
 
-.swiper-scrollbar {
-  background: rgba(255, 255, 255, 0.16);
+.swiper-button-prev::after {
+  content: "‹";
 }
 
-.swiper-scrollbar-drag {
-  background: #60a5fa;
+.swiper-button-next::after {
+  content: "›";
+}
+
+.swiper-pagination {
+  position: static;
+  margin-top: 1rem;
+  color: #0f172a !important;
+  font-weight: 700;
 }
 
 /* ---------------------------------------------------------
@@ -147,15 +224,10 @@ a:hover {
   justify-content: space-between;
   gap: 1.25rem;
   padding: 1.75rem;
-  text-align: left;
+  text-align: center;
   color: var(--card-text);
-  background: linear-gradient(
-    160deg,
-    var(--card-bg-start) 0%,
-    var(--card-bg-end) 100%
-  );
-  background: #60a5fa;
-  border: 1px solid rgba(15, 23, 42, 0.06);
+  background: linear-gradient(160deg, #dbeafe 0%, #eff6ff 100%);
+  border: 1px solid rgba(30, 64, 175, 0.12);
   border-radius: 16px;
   box-shadow:
     0 1px 2px rgba(15, 23, 42, 0.04),
@@ -195,7 +267,8 @@ a:hover {
   flex: 1;
   display: flex;
   align-items: center;
-  font-size: clamp(1.15rem, 2vw, 1.6rem);
+  justify-content: center;
+  font-size: clamp(1.4rem, 2vw, 1.6rem);
   line-height: 1.6;
   font-weight: 600;
   color: var(--card-text);
@@ -204,9 +277,9 @@ a:hover {
 }
 
 .swipe-card-button {
-  align-self: flex-start;
   display: inline-flex;
   align-items: center;
+  margin-inline: auto;
   gap: 0.5rem;
   padding: 0.7rem 1.3rem;
   font-size: 0.9rem;
